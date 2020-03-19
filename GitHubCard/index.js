@@ -2,6 +2,9 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+const cardSection = document.querySelector('.cards')
+console.log(cardSection)
+
 axios.get("https://api.github.com/users/JOliver23")
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -12,10 +15,9 @@ axios.get("https://api.github.com/users/JOliver23")
 .then(response => {
   console.log('response', response)
 
-  response.data.forEach(item => {
-    const newGitCard = gitCard(item)
-    
-  })
+  const completeCard = gitCard(response.data)
+  cardSection.appendChild(completeCard)
+
 })
 .catch(err => {
   console.log('broken')
