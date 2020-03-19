@@ -2,14 +2,24 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-
+axios.get("https://api.github.com/users/JOliver23")
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
 
    Skip to Step 3.
 */
+.then(response => {
+  console.log('response', response)
 
+  response.data.forEach(item => {
+    const newGitCard = gitCard(item)
+    
+  })
+})
+.catch(err => {
+  console.log('broken')
+})
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
@@ -45,6 +55,51 @@ const followersArray = [];
 </div>
 
 */
+
+const gitCard = (data) => {
+  const card = document.createElement('div')
+  const photo = document.createElement('img')
+  const subCard = document.createElement('div')
+  const user = document.createElement('h3')
+  const gitName = document.createElement('p')
+  const place = document.createElement('p')
+  const gitProfile = document.createElement('p')
+  const link = document.createElement('a')
+  const gitFollows = document.createElement('p')
+  const gitLead = document.createElement('p')
+  const gitBio = document.createElement('p')
+
+  card.appendChild(photo)
+  card.appendChild(subCard)
+
+  subCard.appendChild(user)
+  subCard.appendChild(gitName)
+  subCard.appendChild(place)
+  subCard.appendChild(gitProfile)
+  gitProfile.appendChild(link)
+  subCard.appendChild(gitFollows)
+  subCard.appendChild(gitLead)
+  subCard.appendChild(gitBio)
+
+  card.classList.add('card')
+  subCard.classList.add('card-info')
+  user.classList.add('name')
+  gitName.classList.add('username')
+
+  photo.src = data.avatar_url
+  user.textContent = data.gitName
+  gitName.textContent = data.login
+  place.textContent = data.location
+  gitProfile.textContent = `Profile: ${data.url}`
+  link.href = data.url
+  gitFollows.textContent = `Followers: ${data.followers}`
+  gitLead.textContent = `Following: ${data.following}`
+  gitBio.textContent = data.bio
+
+
+  return card
+}
+
 
 /* List of LS Instructors Github username's: 
   tetondan
