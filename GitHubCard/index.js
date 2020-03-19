@@ -116,7 +116,8 @@ const gitCard = (data) => {
   gitName.textContent = data.login
   place.textContent = `Location: ${data.location}`
   gitProfile.textContent = `Profile: ${data.url}`
-  link.href = `${data.url}`
+  link.textContent = data.url
+  link.href = data.url
   gitFollows.textContent = `Followers: ${data.followers}`
   gitLead.textContent = `Following: ${data.following}`
   gitBio.textContent = data.bio
