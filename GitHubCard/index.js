@@ -15,6 +15,7 @@ axios.get("https://api.github.com/users/JOliver23")
            create a new component and add it to the DOM as a child of .cards
 */
 .then(response => {
+  console.log(response)
   const completeCard = gitCard(response.data)
   cardSection.prepend(completeCard)
 })
@@ -40,6 +41,7 @@ followersArray.forEach(friend => {
   .then(response => {
     const guestCard = gitCard(response.data)
     cardSection.appendChild(guestCard)
+    console.log(guestCard)
   })
   .catch(err => {
     console.log('broke friends are no fun')
@@ -78,9 +80,13 @@ const gitCard = (data) => {
   const gitFollows = document.createElement('p')
   const gitLead = document.createElement('p')
   const gitBio = document.createElement('p')
+  const gitRepos = document.createElement('p')
+  const gitRepoLink = document.createElement('a')
+  const button = document.createElement('span')
 
   card.appendChild(photo)
   card.appendChild(subCard)
+  
 
   subCard.appendChild(user)
   subCard.appendChild(gitName)
@@ -90,21 +96,42 @@ const gitCard = (data) => {
   subCard.appendChild(gitFollows)
   subCard.appendChild(gitLead)
   subCard.appendChild(gitBio)
+  subCard.appendChild(gitRepos)
+  subCard.appendChild(gitRepoLink)
+  subCard.appendChild(button)
+
 
   card.classList.add('card')
+  card.style.backgroundColor = 'dodgerblue'
   subCard.classList.add('card-info')
   user.classList.add('name')
   gitName.classList.add('username')
+  gitBio.classList.add('expand-card')
+  gitRepos.classList.add('expand-card')
+  gitRepoLink.classList.add('expand-card')
+
 
   photo.src = data.avatar_url
-  user.textContent = data.gitName
+  user.textContent = data.name
   gitName.textContent = data.login
-  place.textContent = data.location
+  place.textContent = `Location: ${data.location}`
   gitProfile.textContent = `Profile: ${data.url}`
-  link.href = data.url
+  link.href = `${data.url}`
   gitFollows.textContent = `Followers: ${data.followers}`
   gitLead.textContent = `Following: ${data.following}`
   gitBio.textContent = data.bio
+  gitRepos.textContent = data.public_repos
+  gitRepoLink.textContent = 'GitHub Repos'
+  gitRepoLink.href = data.url
+  button.textContent = '\u00BB'
+  button.style.fontSize = '2rem'
+
+  button.addEventListener('click', () =>{
+    gitBio.classList.toggle('expand-card')
+    gitRepos.classList.toggle('expand-card')
+    gitRepoLink.classList.toggle('expand-card')
+  })
+
 
 
   return card
