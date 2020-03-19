@@ -3,7 +3,6 @@
            https://api.github.com/users/<your name>
 */
 const cardSection = document.querySelector('.cards')
-console.log(cardSection)
 
 axios.get("https://api.github.com/users/JOliver23")
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -12,19 +11,17 @@ axios.get("https://api.github.com/users/JOliver23")
 
    Skip to Step 3.
 */
+/* Step 4: Pass the data received from Github into your function, 
+           create a new component and add it to the DOM as a child of .cards
+*/
 .then(response => {
-  console.log('response', response)
-
   const completeCard = gitCard(response.data)
-  cardSection.appendChild(completeCard)
-
+  cardSection.prepend(completeCard)
 })
 .catch(err => {
   console.log('broken')
 })
-/* Step 4: Pass the data received from Github into your function, 
-           create a new component and add it to the DOM as a child of .cards
-*/
+
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -36,7 +33,18 @@ axios.get("https://api.github.com/users/JOliver23")
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+followersArray.forEach(friend => {
+  axios.get(`https://api.github.com/users/${friend}`)
+  .then(response => {
+    const guestCard = gitCard(response.data)
+    cardSection.appendChild(guestCard)
+  })
+  .catch(err => {
+    console.log('broke friends are no fun')
+  })
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
