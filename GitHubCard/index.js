@@ -102,7 +102,7 @@ const gitCard = (data) => {
 
 
   card.classList.add('card')
-  card.style.backgroundColor = 'dodgerblue'
+  card.style.backgroundColor = '#31C5D2'
   subCard.classList.add('card-info')
   user.classList.add('name')
   gitName.classList.add('username')
@@ -121,8 +121,7 @@ const gitCard = (data) => {
   gitFollows.textContent = `Followers: ${data.followers}`
   gitLead.textContent = `Following: ${data.following}`
   gitBio.textContent = data.bio
-  gitRepos.textContent = data.public_repos
-  gitRepoLink.textContent = 'GitHub Repos'
+  gitRepos.textContent = `GitHub Repos: ${data.public_repos}`
   gitRepoLink.href = data.url
   button.textContent = '\u00BB'
   button.style.fontSize = '2rem'
@@ -132,8 +131,13 @@ const gitCard = (data) => {
     gitRepos.classList.toggle('expand-card')
     gitRepoLink.classList.toggle('expand-card')
   })
-
-
+  card.addEventListener('mouseenter', () => {
+    card.style.transform = 'scale(1.1)'
+    card.style.transition = 'all 0.3s'
+  })
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'scale(1)'
+  })
 
   return card
 }
